@@ -1,0 +1,71 @@
+#!/data/data/com.termux/files/usr/bin/bash
+echo   "___   ____ ____   _____ _    __  __ ___ _  __   __"
+echo "| __ ) / ___/ ___| |  ___/ \  |  \/  |_ _| | \ \ / /"
+echo "|  _ \| |  | |  _  | |_ / _ \ | |\/| || || |  \ V /"
+echo "| |_) | |__| |_| | |  _/ ___ \| |  | || || |___| |"
+echo "|____/ \____\____| |_|/_/   \_\_|  |_|___|_____|_|"
+
+echo "Please select an option :"
+echo ""
+echo "1. Install the requirements"
+echo "2. Start this tool"
+read OPT
+if [ "$OPT" -eq 1 ]
+then
+pkg install ncurses-utils
+clear
+echo "Succesfully installed :) Now run this tool again and select option 2"
+elif [ "$OPT" -eq 2 ]
+then
+clear
+echo   "___   ____ ____   _____ _    __  __ ___ _  __   __"
+echo "| __ ) / ___/ ___| |  ___/ \  |  \/  |_ _| | \ \ / /"
+echo "|  _ \| |  | |  _  | |_ / _ \ | |\/| || || |  \ V /"
+echo "| |_) | |__| |_| | |  _/ ___ \| |  | || || |___| |"
+echo "|____/ \____\____| |_|/_/   \_\_|  |_|___|_____|_|"
+echo           "Coded By Rooted Hunter From BCG"
+var=0
+var2=0
+var3=0
+
+RED='\e[0;31m'
+GREEN='\e[0;32m'
+BLUE='\e[4;36m'
+    echo -n "site to scan (including http:// and trailing '/'): "
+    read site
+    echo -n "admin list file: "
+    read admin
+    clear
+      echo   "___   ____ ____   _____ _    __  __ ___ _  __   __"
+      echo "| __ ) / ___/ ___| |  ___/ \  |  \/  |_ _| | \ \ / /"
+      echo "|  _ \| |  | |  _  | |_ / _ \ | |\/| || || |  \ V /"
+      echo "| |_) | |__| |_| | |  _/ ___ \| |  | || || |___| |"       
+      echo "|____/ \____\____| |_|/_/   \_\_|  |_|___|_____|_|"
+      echo       "Coded By Rooted Hunter From BCG"
+      echo ""
+      echo "Scanning..."
+exec<$admin
+while read line
+do
+var3=`expr $var3 + 1`
+url=`(curl $site$line --head) 2>&1 | grep "HTTP" | cut -d " " -f 2`
+case $url in
+200 ) echo -e "$site$line $GREEN<--Success!!!" && tput sgr0 && var=`expr $var + 1`
+;;
+302 ) echo -e "$site$line $BLUE<--Possible (302)" && tput sgr0 && var2=`expr $var2 + 1`
+;;
+404 ) echo -en "$site$line $RED<-- Failed    \r" && tput sgr0
+;;
+*)
+;;
+esac
+done
+tput sgr0
+echo -e " "
+echo -e " "
+echo -e "$var admin pages."
+echo -e "$var2 302 pages."
+echo -e "$var3 total pages tested."
+else 
+echo "Dude you are fucked  !! select a valid option"
+fi
