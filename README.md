@@ -2,6 +2,7 @@
 Scan a website for its admin panel with your own wordlist
 
 #How to Install
+
 copy the following commands
 
 git clone https://github.com/ROOTED833/AdminScanner
